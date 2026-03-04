@@ -16,7 +16,6 @@ import com.example.zoologicoapp.R
 
 class AnimalDetailFragment : Fragment() {
 
-    // Compartimos el mismo ViewModel de la lista
     private val viewModel: ZooViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -29,30 +28,42 @@ class AnimalDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Recibimos el ID del animal que el usuario tocó en la lista
         val animalId = arguments?.getInt("animalId") ?: return
 
-        // Buscamos los elementos visuales en el diseño
+        // Referencias a los elementos básicos
         val imgAnimal = view.findViewById<ImageView>(R.id.imgAnimalDetalle)
         val tvNombre = view.findViewById<TextView>(R.id.tvNombreDetalle)
         val tvEstado = view.findViewById<TextView>(R.id.tvEstadoConservacion)
         val tvDesc = view.findViewById<TextView>(R.id.tvDescripcion)
         val btnCorreo = view.findViewById<Button>(R.id.btnCorreo)
 
-        // Le pedimos al ViewModel los detalles de ESTE animal específico
+        // Nuevas referencias para los detalles extra
+        val tvEsperanza = view.findViewById<TextView>(R.id.tvEsperanzaVida)
+        val tvDimensiones = view.findViewById<TextView>(R.id.tvDimensiones)
+        val tvDatosCuriosos = view.findViewById<TextView>(R.id.tvDatosCuriosos)
+        val tvComidas = view.findViewById<TextView>(R.id.tvComidas)
+        val tvPredadores = view.findViewById<TextView>(R.id.tvPredadores)
+
         viewModel.getAnimalDetalle(animalId).observe(viewLifecycleOwner) { animal ->
             animal?.let {
-                // Llenamos los textos en la pantalla
+                // Textos principales
                 tvNombre.text = it.nombre
-                tvEstado.text = it.estadoDeConservacion ?: "Consultando estado..."
-                tvDesc.text = it.descripcion ?: "Descargando descripción..."
+                tvEstado.text = it.estadoDeConservacion?.uppercase() ?: "ESTADO DESCONOCIDO"
+                tvDesc.text = it.descripcion ?: "Descripción no disponible."
 
-                // Cargamos la imagen con Coil
+                // Detalles extra
+                tvEsperanza.text = "⏳ Esperanza de vida: ${it.esperanzaDeVida ?: "N/A"}"
+                tvDimensiones.text = "⚖️ Peso: ${it.pesoPromedio ?: "N/A"} | 📏 Altura: ${it.alturaPromedio ?: "N/A"}"
+
+                // Formateamos las listas para que aparezcan con viñetas
+                tvDatosCuriosos.text = it.datosCuriosos?.joinToString(separator = "\n\n") { dato -> "• $dato" } ?: "Sin datos curiosos"
+                tvComidas.text = it.comidasFavoritas?.joinToString(separator = "\n") { comida -> "• $comida" } ?: "Dieta no especificada"
+                tvPredadores.text = it.predadoresNaturales?.joinToString(separator = "\n") { predador -> "• $predador" } ?: "Sin predadores registrados"
+
                 imgAnimal.load(it.imagen) {
                     crossfade(true)
                 }
 
-                // Configuramos el botón del correo (Intent Implícito)
                 btnCorreo.setOnClickListener { _ ->
                     enviarCorreo(it.nombre)
                 }
@@ -60,14 +71,12 @@ class AnimalDetailFragment : Fragment() {
         }
     }
 
-    // Función que abre la app de correos del teléfono con los datos prellenados
     private fun enviarCorreo(nombreAnimal: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:") // Solo aplicaciones de correo responderán a esto
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("info@tuzoologico.com")) // Destinatario requerido [cite: 116]
-            putExtra(Intent.EXTRA_SUBJECT, "Información sobre: $nombreAnimal") // Asunto requerido [cite: 117]
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("info@tuzoologico.com"))
+            putExtra(Intent.EXTRA_SUBJECT, "Información sobre: $nombreAnimal")
 
-            // Cuerpo del mensaje exacto que pide el requerimiento [cite: 118, 119]
             val mensaje = "Solicito más información sobre el o los Zoológicos dentro de Chile que tienen un $nombreAnimal. Me gustaría realizar una reserva para visitarlo junto a mi familia."
             putExtra(Intent.EXTRA_TEXT, mensaje)
         }
