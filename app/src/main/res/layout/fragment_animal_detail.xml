@@ -81,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="⏳ Esperanza de vida: 10-15 años" />
 
             <TextView
@@ -90,6 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/primary_text"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 tools:text="⚖️ Peso: 200kg | 📏 Altura: 1.1m" />
         </LinearLayout>
 
@@ -116,7 +118,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="12dp"
                 android:textColor="@color/secondary_text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -133,7 +136,8 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="12dp"
                 android:textColor="@color/secondary_text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -149,7 +153,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/secondary_text"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
