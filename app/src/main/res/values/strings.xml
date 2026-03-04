@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Zoológico App</string>
+    <string name="title_listado">Animales de Chile</string>
+    <string name="title_detalle">Detalle del Animal</string>
+    <string name="btn_enviar_correo">Solicitar Información</string>
+    <string name="txt_cargando">Cargando animales...</string>
+</resources>
