@@ -1,6 +1,6 @@
 # Zoológico App
 
-Aplicación Android desarrollada para consultar información detallada sobre los animales que habitan en los zoológicos de Chile. Este proyecto tiene un enfoque educativo, permitiendo a los usuarios aprender sobre la biodiversidad, características, hábitos y el estado de conservación de diversas especies.
+Aplicación Android desarrollada para consultar información detallada sobre los animales que habitan en zoológicos. Este proyecto tiene un enfoque educativo, permitiendo a los usuarios aprender sobre la biodiversidad, características, hábitos y el estado de conservación de diversas especies.
 
 ## Características Principales
 
